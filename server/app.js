@@ -24,6 +24,7 @@ app.use(function(req, res, next) {
   );
   next();
 });
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(logger('dev'));
@@ -31,7 +32,9 @@ app.use(logger('dev'));
 app.use('/:company', express.static('public'));
 // app.use('/api/graph', routes);
 app.use('/graph', routes);
+
 app.use('/api/graph', routes);
+
 module.exports = {
   app,
   mongoose

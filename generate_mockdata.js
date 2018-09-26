@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const compsArr = require('./company_names');
 
-var data = function(numOfCompanies) {
+var data = function (numOfCompanies) {
   var results = [];
   for (var i = 0; i < numOfCompanies; i++) {
     var obj = {
@@ -14,18 +14,18 @@ var data = function(numOfCompanies) {
       robinhood_owners: faker.random.number({ min: 20000, max: 200000 }),
       tickers: []
     };
-    for (var j = 1; j < 5; j++) {
+    for (var j = 1; j < 2; j++) {
       var monday = getMonthlyWeekday(j, 'Monday', 'September', 2018);
-      var tuesday = getMonthlyWeekday(j, 'Tuesday', 'September', 2018);
-      var wednesday = getMonthlyWeekday(j, 'Wednesday', 'September', 2018);
-      var thursday = getMonthlyWeekday(j, 'Thursday', 'September', 2018);
-      var friday = getMonthlyWeekday(j, 'Friday', 'September', 2018);
+      // var tuesday = getMonthlyWeekday(j, 'Tuesday', 'September', 2018);
+      // var wednesday = getMonthlyWeekday(j, 'Wednesday', 'September', 2018);
+      // var thursday = getMonthlyWeekday(j, 'Thursday', 'September', 2018);
+      // var friday = getMonthlyWeekday(j, 'Friday', 'September', 2018);
       obj.tickers.push(
         { date: new Date(2018, 8, monday), price: timesAndPrice() },
-        { date: new Date(2018, 8, tuesday), price: timesAndPrice() },
-        { date: new Date(2018, 8, wednesday), price: timesAndPrice() },
-        { date: new Date(2018, 8, thursday), price: timesAndPrice() },
-        { date: new Date(2018, 8, friday), price: timesAndPrice() }
+        // { date: new Date(2018, 8, tuesday), price: timesAndPrice() },
+        // { date: new Date(2018, 8, wednesday), price: timesAndPrice() },
+        // { date: new Date(2018, 8, thursday), price: timesAndPrice() },
+        // { date: new Date(2018, 8, friday), price: timesAndPrice() }
       );
     }
     results.push(obj);
@@ -60,7 +60,7 @@ function getMonthlyWeekday(n, d, m, y) {
 function timesAndPrice() {
   var x = 10;
   var times = [];
-  var startingTime = 360;
+  var startingTime = 600;
 
   for (var i = 0; startingTime < 15.1 * 60; i++) {
     var hh = Math.floor(startingTime / 60);
