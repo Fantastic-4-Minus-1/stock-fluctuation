@@ -7,6 +7,9 @@ Router.route('/:company')
     console.log('hit');
     next();
   })
-  .get(Ctrl.fetchCompany);
+  .get(Ctrl.fetchCompany)
+  .delete(Ctrl.deleteCompany)
+  .put(Ctrl.editCompany)
+  .post(Ctrl.addCompany);
 
 module.exports = Router;

@@ -7,14 +7,14 @@ const PriceAndTimeSchema = new mongoose.Schema({
 
 const TickerSchema = new mongoose.Schema({
   date: String,
-  price: [PriceAndTimeSchema]
+  price: [PriceAndTimeSchema],
 });
 
 const CompanySchema = new mongoose.Schema({
   company: { type: String, unique: true },
   anaylst_percent: Number,
   robinhood_owners: Number,
-  tickers: [TickerSchema]
+  tickers: [TickerSchema],
 });
 
 const Company = mongoose.model('Company', CompanySchema);

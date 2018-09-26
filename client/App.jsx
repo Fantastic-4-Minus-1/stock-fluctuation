@@ -278,7 +278,7 @@ class App extends Component {
         id="stockFlucuation"
         className={`uk-container-small ${
           marketIsOpen ? 'theme-open-up' : 'theme-closed-down'
-        }`}
+          }`}
       >
         <Header marketIsUp={marketIsUp} marketIsOpen={marketIsOpen} />
         <GraphHeaderContainer

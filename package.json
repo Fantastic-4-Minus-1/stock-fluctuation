@@ -16,7 +16,7 @@
   "main": "server.js",
   "scripts": {
     "test": "jest",
-    "start": "node server/server.js",
+    "start": "nodemon server/server.js",
     "build": "webpack --mode production",
     "watch": "webpack --watch --mode production",
     "lint": "eslint client/**",
@@ -44,6 +44,7 @@
     "moment": "^2.22.2",
     "mongodb": "^3.1.6",
     "mongoose": "^5.2.13",
+    "nodemon": "^1.18.4",
     "prop-types": "^15.6.2",
     "react": "^16.5.0",
     "react-countup": "^4.0.0-alpha.6",
