@@ -1,12 +1,41 @@
 const faker = require('faker');
+const generateCompanyEntry = (acronym, index) => {
 
-const generateCompanyEntry = (acronym, company, numOfCompanies = 1) => {
+  const companyNames = {
+    'A': 'Analytics',
+    'B': 'Bouyer',
+    'C': 'Caltronic',
+    'D': 'Denature',
+    'E': 'Enron',
+    'F': 'Fenway',
+    'G': 'Graphics',
+    'H': 'Harriet',
+    'I': 'Ingrain',
+    'J': 'Johnson',
+    'K': 'Kinetic',
+    'L': 'LL',
+    'M': 'Marriot',
+    'N': 'Nahar',
+    'O': 'Optics',
+    'P': 'Penn. A.',
+    'Q': 'Quan',
+    'R': 'Rendi',
+    'S': 'Solutions',
+    'T': 'Technologies',
+    'U': 'U.',
+    'V': 'Vector',
+    'W': 'Web',
+    'X': 'Xavier',
+    'Y': 'Y.',
+    'Z': 'Zenic',
+  };
+
   var data = function (numOfCompanies) {
     var results = [];
-    for (var i = 0; i < acronym.length; i++) {
+    for (var i = 0; i < numOfCompanies && index[0] <= 10000000; i++) {
       var obj = {
-        // _id: _id,
-        company: company,
+        _id: index[0],
+        company: `${companyNames[acronym[i][0]]} ${companyNames[acronym[i][1]]}`,
         companyAbbr: acronym[i],
         anaylst_percent: faker.random.number({ min: 1, max: 99 }),
         robinhood_owners: faker.random.number({ min: 20000, max: 200000 }),
@@ -27,6 +56,7 @@ const generateCompanyEntry = (acronym, company, numOfCompanies = 1) => {
         );
       }
       results.push(obj);
+      index[0]++;
     }
     return results;
   };
@@ -77,7 +107,7 @@ const generateCompanyEntry = (acronym, company, numOfCompanies = 1) => {
     }
     return times;
   }
-  return data(numOfCompanies);
+  return data(acronym.length);
 };
 
 module.exports = generateCompanyEntry;

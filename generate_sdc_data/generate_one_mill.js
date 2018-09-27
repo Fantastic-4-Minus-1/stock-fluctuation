@@ -1,7 +1,8 @@
-const faker = require('faker');
 const fs = require('fs');
+const path = require('path');
 const generateCompanyEntry = require('./generateCompanyEntry.js');
 
+// Return all unique stock acrynoms for n letters long //
 const range = (startChar, endChar) => {
   const result = [];
   const start = startChar.charCodeAt(0);
@@ -27,26 +28,33 @@ const generateTickerSymbol = (n = 5, baseChar = '') => {
   return result;
 };
 
-// const ticker = generateTickerSymbol(1);
+///////////////////////////
 
-let totalEntries = 0;
-alphabet.forEach((letter) => {
-  let acronyms = generateTickerSymbol(2, letter);
-})
+const writeFiles = (acronymLength) => {
+  let totalEntries = [1];
+  let fileIndex = 1;
+  alphabet.forEach((letter) => {
+    const acronyms = generateTickerSymbol(acronymLength, letter);
+    fs.writeFile(
+      path.join(__dirname, `data_${fileIndex}.json`),
+      JSON.stringify(generateCompanyEntry(acronyms, totalEntries)),
+      (err) => {
+        if (err) return console.log(err);
+      }
+    );
+    fileIndex += 1;
+  });
+};
 
-const writeEntriesToFile = (filePath, numOfEntries) => {
-  let result = {};
+writeFiles(5);
 
+//   fs.writeFile(
+//     path.join(__dirname, 'mill_1.json'),
+//     JSON.stringify(result),
+//     (err) => {
+//       if (err) return console.log(err);
+//     }
+//   );
+// }
 
-
-
-  fs.writeFile(
-    path.join(__dirname, 'mill_1.json'),
-    JSON.stringify(result),
-    (err) => {
-      if (err) return console.log(err);
-    }
-  );
-}
-
-module.exports = writeEntriesToFile;
+module.exports = writeFiles;
