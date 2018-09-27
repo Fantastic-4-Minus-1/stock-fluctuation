@@ -61,4 +61,4 @@ typings/
 .next
 
 # Large scale data generation
-ten_mill_data/
+generate_sdc_data/ten_mill_data/

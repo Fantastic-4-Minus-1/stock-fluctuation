@@ -1,5 +1,8 @@
 const faker = require('faker');
-const generateCompanyEntry = (acronym, index) => {
+const fs = require('fs');
+const path = require('path');
+
+const generateCompanyEntry = (acronym, index, fileIndex) => {
 
   const companyNames = {
     'A': 'Analytics',
@@ -30,8 +33,8 @@ const generateCompanyEntry = (acronym, index) => {
     'Z': 'Zenic',
   };
 
-  var data = function (numOfCompanies) {
-    var results = [];
+  const data = function (numOfCompanies) {
+    let results = [];
     for (var i = 0; i < numOfCompanies && index[0] <= 10000000; i++) {
       var obj = {
         _id: index[0],
@@ -43,22 +46,45 @@ const generateCompanyEntry = (acronym, index) => {
       };
       for (var j = 1; j < 2; j++) {
         var monday = getMonthlyWeekday(j, 'Monday', 'September', 2018);
-        // var tuesday = getMonthlyWeekday(j, 'Tuesday', 'September', 2018);
-        // var wednesday = getMonthlyWeekday(j, 'Wednesday', 'September', 2018);
-        // var thursday = getMonthlyWeekday(j, 'Thursday', 'September', 2018);
-        // var friday = getMonthlyWeekday(j, 'Friday', 'September', 2018);
         obj.tickers.push(
           { date: new Date(2018, 8, monday), price: timesAndPrice() },
-          // { date: new Date(2018, 8, tuesday), price: timesAndPrice() },
-          // { date: new Date(2018, 8, wednesday), price: timesAndPrice() },
-          // { date: new Date(2018, 8, thursday), price: timesAndPrice() },
-          // { date: new Date(2018, 8, friday), price: timesAndPrice() }
         );
       }
       results.push(obj);
+      if (results.length === 50000) {
+        writeToFile(fileIndex[0], results);
+        // fs.writeFile(
+        //   path.join(__dirname, 'ten_mill_data', `data_${fileIndex[0]}.json`),
+        //   JSON.stringify(results),
+        //   (err) => {
+        //     if (err) return console.log(err);
+        //   }
+        // );
+        fileIndex[0]++;
+        results = [];
+      }
       index[0]++;
     }
-    return results;
+    // fs.writeFile(
+    //   path.join(__dirname, 'ten_mill_data', `data_${fileIndex[0]}.json`),
+    //   JSON.stringify(results),
+    //   (err) => {
+    //     if (err) return console.log(err);
+    //   }
+    // );
+    writeToFile(fileIndex[0], results);
+    fileIndex[0]++;
+    return;
+  };
+
+  const writeToFile = (file, results) => {
+    fs.writeFile(
+      path.join(__dirname, 'ten_mill_data', `data_${file}.json`),
+      JSON.stringify(results),
+      (err) => {
+        if (err) return console.log(err);
+      }
+    );
   };
 
   function getMonthlyWeekday(n, d, m, y) {
@@ -107,6 +133,7 @@ const generateCompanyEntry = (acronym, index) => {
     }
     return times;
   }
+
   return data(acronym.length);
 };
 

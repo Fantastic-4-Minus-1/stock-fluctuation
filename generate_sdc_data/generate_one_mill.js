@@ -31,30 +31,67 @@ const generateTickerSymbol = (n = 5, baseChar = '') => {
 ///////////////////////////
 
 const writeFiles = (acronymLength) => {
+  // console.time(label);
   let totalEntries = [1];
-  let fileIndex = 1;
+  let fileIndex = [1];
   alphabet.forEach((letter) => {
     const acronyms = generateTickerSymbol(acronymLength, letter);
-    fs.writeFile(
-      path.join(__dirname, `data_${fileIndex}.json`),
-      JSON.stringify(generateCompanyEntry(acronyms, totalEntries)),
-      (err) => {
-        if (err) return console.log(err);
-      }
-    );
-    fileIndex += 1;
+    generateCompanyEntry(acronyms, totalEntries, fileIndex);
+    // fs.writeFile(
+    //   path.join(__dirname, 'ten_mill_data', `data_${fileIndex}.json`),
+    //   JSON.stringify(generateCompanyEntry(acronyms, totalEntries)),
+    //   (err) => {
+    //     if (err) return console.log(err);
+    //   }
+    // );
   });
 };
 
 writeFiles(5);
 
-//   fs.writeFile(
-//     path.join(__dirname, 'mill_1.json'),
-//     JSON.stringify(result),
-//     (err) => {
-//       if (err) return console.log(err);
-//     }
-//   );
-// }
+// fs.writeFile(
+//   path.join(__dirname, 'data_1.json'),
+//   JSON.stringify('['),
+//   (err) => {
+//     if (err) return console.log(err);
+//   }
+// );
+
+// fs.appendFile(
+//   path.join(__dirname, 'data_1.json'),
+//   JSON.stringify({
+//     test1: 'blah'
+//   }),
+//   (err) => {
+//     if (err) return console.log(err);
+//   }
+// );
+
+// fs.appendFile(
+//   path.join(__dirname, 'data_1.json'),
+//   JSON.stringify(','),
+//   (err) => {
+//     if (err) return console.log(err);
+//   }
+// );
+
+// fs.appendFile(
+//   path.join(__dirname, 'data_1.json'),
+//   JSON.stringify({
+//     test: 'text'
+//   }),
+//   (err) => {
+//     if (err) return console.log(err);
+//   }
+// );
+
+// fs.appendFile(
+//   path.join(__dirname, 'data_1.json'),
+//   JSON.stringify(']'),
+//   (err) => {
+//     if (err) return console.log(err);
+//   }
+// );
+
 
 module.exports = writeFiles;
