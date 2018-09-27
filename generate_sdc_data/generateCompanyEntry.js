@@ -51,7 +51,7 @@ const generateCompanyEntry = (acronym, index, fileIndex) => {
         );
       }
       results.push(obj);
-      if (results.length === 50000) {
+      if (results.length === 25000) {
         writeToFile(fileIndex[0], results);
         // fs.writeFile(
         //   path.join(__dirname, 'ten_mill_data', `data_${fileIndex[0]}.json`),
