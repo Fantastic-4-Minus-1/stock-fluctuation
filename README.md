@@ -36,3 +36,10 @@ From within the root directory:
 npm install -g webpack
 npm install
 ```
+## CRUD 
+
+GET /api/graph/:company
+GET /api/graph/:company
+POST /api/graph
+PUT /api/graph
+DELETE /api/graph/:company
