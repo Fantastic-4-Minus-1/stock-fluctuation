@@ -37,6 +37,7 @@
   "homepage": "https://github.com/RobinHackers/stock_fluctuation/blob/master/README.md",
   "dependencies": {
     "axios": "^0.18.0",
+    "bluebird": "^3.5.2",
     "body-parser": "^1.18.3",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
@@ -45,6 +46,7 @@
     "mongodb": "^3.1.6",
     "mongoose": "^5.2.13",
     "nodemon": "^1.18.4",
+    "pg": "^7.4.3",
     "prop-types": "^15.6.2",
     "react": "^16.5.0",
     "react-countup": "^4.0.0-alpha.6",

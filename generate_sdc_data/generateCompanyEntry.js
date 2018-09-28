@@ -1,9 +1,9 @@
-const faker = require('faker');
 const fs = require('fs');
 const path = require('path');
 
-const generateCompanyEntry = (acronym, index, fileIndex) => {
-
+const generateCompanyEntry = (acronym, index, totalEntries, fileAmount) => {
+  const getRandomInt = max => Math.ceil(Math.random() * Math.floor(max));
+  console.time('file');
   const companyNames = {
     'A': 'Analytics',
     'B': 'Bouyer',
@@ -35,13 +35,13 @@ const generateCompanyEntry = (acronym, index, fileIndex) => {
 
   const data = function (numOfCompanies) {
     let results = [];
-    for (var i = 0; i < numOfCompanies && index[0] <= 10000000; i++) {
+    for (var i = 0; i < numOfCompanies; i++) {
       var obj = {
-        _id: index[0],
+        _id: index[0] + 1,
         company: `${companyNames[acronym[i][0]]} ${companyNames[acronym[i][1]]}`,
         companyAbbr: acronym[i],
-        anaylst_percent: faker.random.number({ min: 1, max: 99 }),
-        robinhood_owners: faker.random.number({ min: 20000, max: 200000 }),
+        anaylst_percent: getRandomInt(99),
+        robinhood_owners: getRandomInt(180000) + 20000,
         tickers: []
       };
       for (var j = 1; j < 2; j++) {
@@ -51,29 +51,12 @@ const generateCompanyEntry = (acronym, index, fileIndex) => {
         );
       }
       results.push(obj);
-      if (results.length === 25000) {
-        writeToFile(fileIndex[0], results);
-        // fs.writeFile(
-        //   path.join(__dirname, 'ten_mill_data', `data_${fileIndex[0]}.json`),
-        //   JSON.stringify(results),
-        //   (err) => {
-        //     if (err) return console.log(err);
-        //   }
-        // );
-        fileIndex[0]++;
-        results = [];
-      }
       index[0]++;
+      if (results.length === fileAmount) {
+        return results;
+        console.timeEnd('file');
+      }
     }
-    // fs.writeFile(
-    //   path.join(__dirname, 'ten_mill_data', `data_${fileIndex[0]}.json`),
-    //   JSON.stringify(results),
-    //   (err) => {
-    //     if (err) return console.log(err);
-    //   }
-    // );
-    writeToFile(fileIndex[0], results);
-    fileIndex[0]++;
     return;
   };
 
@@ -127,14 +110,14 @@ const generateCompanyEntry = (acronym, index, fileIndex) => {
         tempObj['currentTime'] =
           ('0' + (hh % 12)).slice(-2) + ':' + ('0' + mm).slice(-2);
       }
-      tempObj['currentPrice'] = faker.commerce.price(100.0, 150.7, 2);
+      tempObj['currentPrice'] = getRandomInt(50) + 100;
       times.push(tempObj);
       startingTime = startingTime + x;
     }
     return times;
   }
 
-  return data(acronym.length);
+  return data(fileAmount);
 };
 
 module.exports = generateCompanyEntry;

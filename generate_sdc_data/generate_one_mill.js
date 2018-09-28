@@ -1,6 +1,9 @@
-const fs = require('fs');
+const Promise = require('bluebird');
+const fs = Promise.promisifyAll(require('fs'));
 const path = require('path');
 const generateCompanyEntry = require('./generateCompanyEntry.js');
+
+console.time('Total');
 
 // Return all unique stock acrynoms for n letters long //
 const range = (startChar, endChar) => {
@@ -15,83 +18,76 @@ const range = (startChar, endChar) => {
 
 const alphabet = range('A', 'Z');
 
+const fileAmount = 20000;
+const ticksArray = [];
+
 const generateTickerSymbol = (n = 5, baseChar = '') => {
-  // let counter = 1;
-  const result = [];
+  console.time('tickers');
+  let result = [];
   const uniqueTicker = (current = '') => {
     if (current.length === n) {
-      return result.push(current);
+      result.push(current);
+      if (result.length === fileAmount) {
+        ticksArray.push(result);
+        result = [];
+      }
+      return;
     }
     alphabet.forEach(char => uniqueTicker(current + char));
   };
   uniqueTicker(baseChar);
+  console.timeEnd('tickers');
   return result;
 };
 
-///////////////////////////
+const tickersTest = generateTickerSymbol();
+console.log(tickersTest[99]);
 
-const writeFiles = (acronymLength) => {
-  // console.time(label);
-  let totalEntries = [1];
-  let fileIndex = [1];
-  alphabet.forEach((letter) => {
-    const acronyms = generateTickerSymbol(acronymLength, letter);
-    generateCompanyEntry(acronyms, totalEntries, fileIndex);
-    // fs.writeFile(
-    //   path.join(__dirname, 'ten_mill_data', `data_${fileIndex}.json`),
-    //   JSON.stringify(generateCompanyEntry(acronyms, totalEntries)),
-    //   (err) => {
-    //     if (err) return console.log(err);
-    //   }
-    // );
-  });
+const writeToFile = (file, results) => {
+  return fs.writeFile(
+    path.join(__dirname, 'ten_mill_data', `data_${file}.json`),
+    JSON.stringify(results),
+    (err) => {
+      if (err) return console.log(err);
+    }
+  );
 };
 
-writeFiles(5);
+const tickers = generateTickerSymbol(5);
+const totalEntries = [0];
+const total = 10000000;
 
-// fs.writeFile(
-//   path.join(__dirname, 'data_1.json'),
-//   JSON.stringify('['),
-//   (err) => {
-//     if (err) return console.log(err);
-//   }
-// );
+let ticks = 0;
 
-// fs.appendFile(
-//   path.join(__dirname, 'data_1.json'),
-//   JSON.stringify({
-//     test1: 'blah'
-//   }),
-//   (err) => {
-//     if (err) return console.log(err);
-//   }
-// );
+const promiseFiles = (fileNum = 1) => {
+  console.log('next promise');
+  console.log(totalEntries, 'Total Entries');
+  if (totalEntries[0] >= total) {
+    console.log('done');
+    console.timeEnd('Total');
+    return;
+  }
+  const dataArray = [];
+  console.time('Promises');
+  for (let i = 0; i < 5; i += 1) {
+    dataArray.push(
+      fs.writeFileAsync(
+        path.join(__dirname, 'ten_mill_data', `data_${fileNum}.json`),
+        JSON.stringify(generateCompanyEntry(ticksArray[ticks++], totalEntries, tickers.length, fileAmount)), {},
+      ),
+    );
+    fileNum += 1;
+  }
+  Promise.all(dataArray)
+    .then(() => {
+      console.timeEnd('Promises');
+      promiseFiles(fileNum);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
-// fs.appendFile(
-//   path.join(__dirname, 'data_1.json'),
-//   JSON.stringify(','),
-//   (err) => {
-//     if (err) return console.log(err);
-//   }
-// );
+// promiseFiles();
 
-// fs.appendFile(
-//   path.join(__dirname, 'data_1.json'),
-//   JSON.stringify({
-//     test: 'text'
-//   }),
-//   (err) => {
-//     if (err) return console.log(err);
-//   }
-// );
-
-// fs.appendFile(
-//   path.join(__dirname, 'data_1.json'),
-//   JSON.stringify(']'),
-//   (err) => {
-//     if (err) return console.log(err);
-//   }
-// );
-
-
-module.exports = writeFiles;
+// module.exports = writeFiles;
