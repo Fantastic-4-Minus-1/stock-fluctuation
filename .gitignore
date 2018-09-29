@@ -62,3 +62,4 @@ typings/
 
 # Large scale data generation
 generate_sdc_data/ten_mill_data/
+*.json

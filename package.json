@@ -15,6 +15,9 @@
   },
   "main": "server.js",
   "scripts": {
+    "generate_10M": "node generate_sdc_data/generate_10M_data.js",
+    "seed_postgres": "node postgres_db/seed.js",
+    "seed_cassandra": "node cassandra_db/seed.js",
     "test": "jest",
     "start": "nodemon server/server.js",
     "build": "webpack --mode production",
@@ -47,6 +50,7 @@
     "mongoose": "^5.2.13",
     "nodemon": "^1.18.4",
     "pg": "^7.4.3",
+    "pg-promise": "^8.4.6",
     "prop-types": "^15.6.2",
     "react": "^16.5.0",
     "react-countup": "^4.0.0-alpha.6",
