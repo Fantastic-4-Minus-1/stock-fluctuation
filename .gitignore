@@ -59,3 +59,6 @@ typings/
 
 # next.js build output
 .next
+
+# Large scale data generation
+generate_sdc_data/ten_mill_data/
