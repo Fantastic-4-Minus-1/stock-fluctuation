@@ -18,7 +18,17 @@ const range = (startChar, endChar) => {
 
 const alphabet = range('A', 'Z');
 
+// 10M
+const tickers = generateTickerSymbol(5);
+const totalEntries = [0];
+const total = 10000000;
 const fileAmount = 20000;
+
+// Test Data
+// const totalEntries = [0];
+// const total = 100;
+// const fileAmount = 20;
+
 const ticksArray = [];
 
 const generateTickerSymbol = (n = 5, baseChar = '') => {
@@ -40,23 +50,7 @@ const generateTickerSymbol = (n = 5, baseChar = '') => {
   return result;
 };
 
-const tickersTest = generateTickerSymbol();
-console.log(tickersTest[99]);
-
-const writeToFile = (file, results) => {
-  return fs.writeFile(
-    path.join(__dirname, 'ten_mill_data', `data_${file}.json`),
-    JSON.stringify(results),
-    (err) => {
-      if (err) return console.log(err);
-    }
-  );
-};
-
 const tickers = generateTickerSymbol(5);
-const totalEntries = [0];
-const total = 10000000;
-
 let ticks = 0;
 
 const promiseFiles = (fileNum = 1) => {
@@ -72,7 +66,7 @@ const promiseFiles = (fileNum = 1) => {
   for (let i = 0; i < 5; i += 1) {
     dataArray.push(
       fs.writeFileAsync(
-        path.join(__dirname, 'ten_mill_data', `data_${fileNum}.json`),
+        path.join(__dirname, 'test_data', `data_${fileNum}.json`),
         JSON.stringify(generateCompanyEntry(ticksArray[ticks++], totalEntries, tickers.length, fileAmount)), {},
       ),
     );
@@ -88,6 +82,6 @@ const promiseFiles = (fileNum = 1) => {
     });
 };
 
-// promiseFiles();
+promiseFiles();
 
 // module.exports = writeFiles;
