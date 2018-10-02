@@ -62,4 +62,7 @@ typings/
 
 # Large scale data generation
 generate_sdc_data/ten_mill_data/
+generate_sdc_data/csv_data/
+cassandra-loader/
 *.json
+*.csv
