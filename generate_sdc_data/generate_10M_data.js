@@ -19,7 +19,6 @@ const range = (startChar, endChar) => {
 const alphabet = range('A', 'Z');
 
 // 10M
-const tickers = generateTickerSymbol(5);
 const totalEntries = [0];
 const total = 10000000;
 const fileAmount = 20000;
@@ -53,6 +52,35 @@ const generateTickerSymbol = (n = 5, baseChar = '') => {
 const tickers = generateTickerSymbol(5);
 let ticks = 0;
 
+// const promiseFiles = (fileNum = 1) => {
+//   console.log('next promise');
+//   console.log(totalEntries, 'Total Entries');
+//   if (totalEntries[0] >= total) {
+//     console.log('done');
+//     console.timeEnd('Total');
+//     return;
+//   }
+//   const dataArray = [];
+//   console.time('Promises');
+//   for (let i = 0; i < 5; i += 1) {
+//     dataArray.push(
+//       fs.writeFileAsync(
+//         path.join(__dirname, 'ten_mill_data', `data_${fileNum}.json`),
+//         JSON.stringify(generateCompanyEntry(ticksArray[ticks++], totalEntries, tickers.length, fileAmount)), {},
+//       ),
+//     );
+//     fileNum += 1;
+//   }
+//   Promise.all(dataArray)
+//     .then(() => {
+//       console.timeEnd('Promises');
+//       promiseFiles(fileNum);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
+
 const promiseFiles = (fileNum = 1) => {
   console.log('next promise');
   console.log(totalEntries, 'Total Entries');
@@ -65,8 +93,8 @@ const promiseFiles = (fileNum = 1) => {
   console.time('Promises');
   for (let i = 0; i < 5; i += 1) {
     dataArray.push(
-      fs.writeFileAsync(
-        path.join(__dirname, 'test_data', `data_${fileNum}.json`),
+      fs.appendFileAsync(
+        path.join(__dirname, 'singularity.json'),
         JSON.stringify(generateCompanyEntry(ticksArray[ticks++], totalEntries, tickers.length, fileAmount)), {},
       ),
     );
@@ -83,5 +111,3 @@ const promiseFiles = (fileNum = 1) => {
 };
 
 promiseFiles();
-
-// module.exports = writeFiles;

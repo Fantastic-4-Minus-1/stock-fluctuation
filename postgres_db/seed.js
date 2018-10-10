@@ -1,5 +1,5 @@
 const Promise = require('bluebird');
-const readFile = Promise.promisify(require("fs").readFile);
+const readFile = Promise.promisify(require('fs').readFile);
 // const fs = require('fs');
 const pgp = require('pg-promise')({
   capSQL: true,
@@ -57,7 +57,8 @@ const insertOneFile = (fileIndex, fileMax) => {
     });
 };
 
-insertOneFile(pageIndex, max);
+// insertOneFile(pageIndex, max);
+db.none()
 
 // MASSIVE ATTEMPT
 

@@ -37,19 +37,23 @@ const generateCompanyEntry = (acronym, index, totalEntries, fileAmount) => {
     let results = [];
     for (var i = 0; i < numOfCompanies; i++) {
       var obj = {
-        _id: index[0] + 1,
+        id: index[0] + 1,
         company: `${companyNames[acronym[i][0]]} ${companyNames[acronym[i][1]]}`,
-        companyAbbr: acronym[i],
+        company_abbr: acronym[i],
         anaylst_percent: getRandomInt(99),
         robinhood_owners: getRandomInt(180000) + 20000,
         tickers: []
       };
+      let ticks = [];
       for (var j = 1; j < 2; j++) {
         var monday = getMonthlyWeekday(j, 'Monday', 'September', 2018);
-        obj.tickers.push(
+        ticks.push(
           { date: new Date(2018, 8, monday), price: timesAndPrice() },
         );
       }
+      obj.tickers = JSON.stringify(ticks);
+      obj.tickers[0] = '`';
+      obj.tickers[obj.tickers.length - 1] = '`';
       results.push(obj);
       index[0]++;
       if (results.length === fileAmount) {
@@ -60,15 +64,15 @@ const generateCompanyEntry = (acronym, index, totalEntries, fileAmount) => {
     return;
   };
 
-  const writeToFile = (file, results) => {
-    fs.writeFile(
-      path.join(__dirname, 'ten_mill_data', `data_${file}.json`),
-      JSON.stringify(results),
-      (err) => {
-        if (err) return console.log(err);
-      }
-    );
-  };
+  // const writeToFile = (file, results) => {
+  //   fs.writeFile(
+  //     path.join(__dirname, 'ten_mill_data', `data_${file}.json`),
+  //     JSON.stringify(results),
+  //     (err) => {
+  //       if (err) return console.log(err);
+  //     }
+  //   );
+  // };
 
   function getMonthlyWeekday(n, d, m, y) {
     var targetDay,
