@@ -1,13 +1,14 @@
 const express = require('express');
 require('newrelic');
 
-const app = express();
+const app2 = express();
+const path = require('path');
 require('dotenv').config();
 const bodyParser = require('body-parser');
 // const logger = require('morgan');
 const routes = require('../routes');
 
-app.use(function (req, res, next) {
+app2.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
     'Access-Control-Allow-Headers',
@@ -16,16 +17,15 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(logger('dev'));
+app2.use(bodyParser.json());
+app2.use(bodyParser.urlencoded({ extended: true }));
+// app2.use(logger('dev'));
 
-app.use('/:company', express.static('public'));
+app2.use('/:company', express.static('public'));
 
-app.use('/graph', routes);
+app2.use('/api/graph', routes);
 
-app.use('/api/graph', routes);
 
 module.exports = {
-  app,
+  app2,
 };

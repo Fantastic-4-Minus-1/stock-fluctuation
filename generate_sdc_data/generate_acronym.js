@@ -17,7 +17,7 @@ const range = (startChar, endChar) => {
 
 const alphabet = range('A', 'Z');
 
-const fileAmount = 50000;
+const fileAmount = 10;
 
 const ticksArray = [];
 
@@ -42,48 +42,22 @@ const generateTickerSymbol = (n = 5, baseChar = '') => {
 
 generateTickerSymbol(5);
 
-const getRandomInt = max => Math.ceil(Math.random() * Math.floor(max));
-
-const companyNames = {
-  'A': 'Analytics',
-  'B': 'Bouyer',
-  'C': 'Caltronic',
-  'D': 'Denature',
-  'E': 'Enron',
-  'F': 'Fenway',
-  'G': 'Graphics',
-  'H': 'Harriet',
-  'I': 'Ingrain',
-  'J': 'Johnson',
-  'K': 'Kinetic',
-  'L': 'LL',
-  'M': 'Marriot',
-  'N': 'Nahar',
-  'O': 'Optics',
-  'P': 'Penn. A.',
-  'Q': 'Quan',
-  'R': 'Rendi',
-  'S': 'Solutions',
-  'T': 'Technologies',
-  'U': 'U.',
-  'V': 'Vector',
-  'W': 'Web',
-  'X': 'Xavier',
-  'Y': 'Y.',
-  'Z': 'Zenic',
-};
-
 const buildCompanyEnries = (companies = 1, index, acrynoms) => {
   let result = '';
   for (let i = 0; i < companies; i += 1) {
-    result += (`${index[0]},${companyNames[acrynoms[i][0]]} ${companyNames[acrynoms[i][1]]},${acrynoms[i]},${getRandomInt(99)},${getRandomInt(180000) + 20000}\n`);
+    result += (`${acrynoms[i]}`);
+    if ((i + 1) % 10 === 0) {
+      result += '\n';
+    } else {
+      result += ',';
+    }
     index[0] += 1;
   }
   return result;
 };
 
 let ticks = 0;
-const maxC = 10000000;
+const maxC = 200000;
 
 const promiseFiles = (companyIndex = [1], max) => {
   console.log('next promise');
@@ -98,8 +72,8 @@ const promiseFiles = (companyIndex = [1], max) => {
   for (let i = 0; i < 5; i += 1) {
     dataArray.push(
       fs.appendFileAsync(
-        path.join(__dirname, 'stock_table.csv'),
-        buildCompanyEnries(50000, companyIndex, ticksArray[ticks++]), {},
+        path.join(__dirname, 'acronym.csv'),
+        buildCompanyEnries(10, companyIndex, ticksArray[ticks++]), {},
       ),
     );
   }
@@ -114,7 +88,17 @@ const promiseFiles = (companyIndex = [1], max) => {
     });
 };
 
-fs.writeFileAsync(path.join(__dirname, 'stock_table.csv'), 'id,company_name, acronym, analyst_percent,owners')
+const acronymHeader = (num) => {
+  let result = '';
+  for (let i = 0; i < num; i++) {
+    if (i > 0) result += ',';
+    result += `acronym${i}`;
+  }
+  result += '\n';
+  return result;
+};
+
+fs.writeFileAsync(path.join(__dirname, 'acronym.csv'), acronymHeader(10))
   .then(() => {
     promiseFiles([1], maxC);
   })
