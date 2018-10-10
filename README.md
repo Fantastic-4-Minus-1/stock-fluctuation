@@ -36,14 +36,13 @@ From within the root directory:
 npm install -g webpack
 npm install
 ```
-## CRUD 
 
+##CRUD
 GET /api/graph/:company
-
 GET /api/graph/:company
-
-POST /api/graph
-
+POST /api/graph/price
+->>> reqq.body = {"stock_id": <int>, "date": <string>, "time":<string>, "price":<string>}
+POST /api/graph/company
+->>> req.body = {"company_name": <string>, "acronym":  <string>, "analyst_percent": <int>, "owners": <int>}
 PUT /api/graph
-
 DELETE /api/graph/:company

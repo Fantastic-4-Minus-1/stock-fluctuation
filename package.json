@@ -17,7 +17,6 @@
   "scripts": {
     "generate_10M": "node generate_sdc_data/generate_10M_data.js",
     "seed_postgres": "node postgres_db/seed.js",
-    "seed_cassandra": "node cassandra_db/seed.js",
     "test": "jest",
     "start": "nodemon server/server.js",
     "build": "webpack --mode production",
@@ -50,6 +49,7 @@
     "moment": "^2.22.2",
     "mongodb": "^3.1.6",
     "mongoose": "^5.2.13",
+    "newrelic": "^4.9.0",
     "nodemon": "^1.18.4",
     "pg": "^7.4.3",
     "pg-promise": "^8.4.6",
@@ -60,6 +60,7 @@
     "react-router": "^4.3.1",
     "react-tooltip": "^3.8.4",
     "react-vis": "^1.11.1",
+    "request": "^2.88.0",
     "webpack": "^4.17.2"
   },
   "devDependencies": {
