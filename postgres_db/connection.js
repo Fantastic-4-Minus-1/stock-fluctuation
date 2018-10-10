@@ -11,10 +11,10 @@ const pgp = require('pg-promise')({
 
 // EC2 Database
 const db = pgp({
-  user: 'power_user',
-  host: 'ec2-18-217-47-225.us-east-2.compute.amazonaws.com',
-  database: 'stock_fluctuation',
-  password: 'password',
+  user: '',
+  host: '',
+  database: '',
+  password: '',
   port: 5432,
 });
 
